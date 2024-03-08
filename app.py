@@ -4,13 +4,14 @@ import cv2
 import numpy as np
 import tempfile 
 import time
+from playsound import playsound
 from PIL import Image
 import tensorflow as tf
 import numpy as np
 from keras.models import load_model
-model = load_model('10_gestures_model.h5')
+model = load_model('new_action_mod.h5')
 
-model.load_weights('10_gestures_model.h5')
+model.load_weights('new_action_mod.h5')
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
@@ -19,7 +20,7 @@ import os
 DATA_PATH = os.path.join('MP_Data_1') 
 
 # Actions that we try to detect
-actions = np.array(['Ahmar', 'Abyad', 'Akhdar', 'good', 'hello', 'how are', 'I', 'you'])
+actions = np.array(['Ahmar', 'Abyad', 'Akhdar'])
 
 # Thirty videos worth of data
 no_sequences = 30
@@ -150,15 +151,20 @@ def start_detection(st, stframe):
                     res = model.predict(np.expand_dims(sequence, axis=0))[0]
                     predictions.append(np.argmax(res))
 
-                    if np.unique(predictions[-10:])[0] == np.argmax(res) and res[np.argmax(res)] > threshold:
-                        if len(sentence) > 0:
-                            if actions[np.argmax(res)] != sentence[-1]:
-                                sentence.append(actions[np.argmax(res)])
-                        else:
-                            sentence.append(actions[np.argmax(res)])
+                    if len(predictions) >= 10:
+                        unique_predictions = np.unique(predictions[-10:])
+                        if unique_predictions.size > 0:
+                            most_common_prediction = unique_predictions[0]
+                            if most_common_prediction == np.argmax(res) and res[np.argmax(res)] > threshold:
+                                current_action = actions[np.argmax(res)]
+                                if len(sentence) == 0 or current_action != sentence[-1]:
+                                    sentence.append(current_action)
+                                    audio_files = {'Abyad': 'audio/abyad.mp3', 'Ahmar': 'audio/ahmar.mp3', 'Akhdar': 'audio/akhdar.mp3'}
+                                    if current_action in audio_files:
+                                        playsound(audio_files[current_action])
 
-                    if len(sentence) > 5:
-                        sentence = sentence[-5:]
+                                        if len(sentence) > 5:
+                                             sentence = sentence[-5:]
 
                     # image = prob_viz(res, actions, image, colors)
 
