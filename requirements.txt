@@ -4,6 +4,7 @@ mediapipe==0.10.8
 numpy==1.23.5
 opencv_contrib_python==4.8.1.78
 opencv_python_headless==4.8.1.78
+opencv_python==4.8.1.78
 Pillow==10.2.0
 pyttsx3==2.90
 setuptools==65.6.3
