@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import tempfile 
 import time
-import playsound
+from playsound import playsound
 from PIL import Image
 import tensorflow as tf
 import numpy as np
@@ -245,39 +245,10 @@ def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
     # return the resized image
     return resized
 
-app_mode = st.sidebar.selectbox('Choose the App mode',
-['About App','Run on Image','Run on Video']
+app_mode = st.sidebar.selectbox('Sign Recognition',['Run on Video']
 )
 
-if app_mode =='About App':
-    st.markdown('In this application we are using **MediaPipe** for detecting Sign Language. **StreamLit** is to create the Web Graphical User Interface (GUI) ')
-    st.markdown(
-    """
-    <style>
-    [data-testid="stSidebar"][aria-expanded="true"] > div:first-child {
-        width: 400px;
-    }
-    [data-testid="stSidebar"][aria-expanded="false"] > div:first-child {
-        width: 400px;
-        margin-left: -400px;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-    )
-    st.video('https://youtu.be/eLfqvVbvyzA')
-    st.markdown('''
-              # About Me \n 
-                Hey this is **Sameer Edlabadkar**. Working on the technologies such as **Tensorflow, MediaPipe, OpenCV, ResNet50**. \n
-
-                Also check me out on Social Media
-                - [YouTube](https://www.youtube.com/@edlabadkarsameer/videos)
-                - [LinkedIn](https://www.linkedin.com/in/sameer-edlabadkar-43b48b1a7/)
-                - [GitHub](https://github.com/edlabadkarsameer)
-              If you are facing any issue while working feel free to mail me on **edlabadkarsameer@gmail.com**
-
-                ''')
-elif app_mode == 'Run on Video':
+if app_mode == 'Run on Video':
 
     st.set_option('deprecation.showfileUploaderEncoding', False)
 
