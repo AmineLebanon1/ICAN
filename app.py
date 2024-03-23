@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import tempfile 
 import time
-from playsound import playsound
+import playsound
 from PIL import Image
 import tensorflow as tf
 import numpy as np
