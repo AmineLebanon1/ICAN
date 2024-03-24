@@ -249,4 +249,8 @@ if show_webcam:
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 elif not show_webcam:
+    cv2.destroyAllWindows()
     st.write('Please check the webcam box to start the interpreter')
+
+#close webcam
+    
