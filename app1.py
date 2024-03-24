@@ -164,7 +164,7 @@ def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
     return resized
 
 def start_detection(st, stframe):
-    cap = cv2.VideoCapture(-1)
+    cap = cv2.VideoCapture(0)
     sequence = []
     sentence = []
     predictions = []
