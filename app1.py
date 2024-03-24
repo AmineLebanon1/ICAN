@@ -231,7 +231,7 @@ st.markdown(' ## Output')
 
 stframe = st.empty()
 if show_webcam:
-    vid = cv2.VideoCapture(-1)
+    vid = cv2.VideoCapture(0)
     while True:
         ret, img = vid.read()
         if ret is None:
