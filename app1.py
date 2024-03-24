@@ -131,7 +131,7 @@ with col1:
 
 # Webcam
 FRAME_WINDOW = st.image([])
-cap = cv2.VideoCapture(0) # device 1/2
+cap = cv2.VideoCapture(-1) # device 1/2
 def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
     # initialize the dimensions of the image to be resized and
     # grab the image size
@@ -164,7 +164,7 @@ def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
     return resized
 
 def start_detection(st, stframe):
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(-1)
     sequence = []
     sentence = []
     predictions = []
