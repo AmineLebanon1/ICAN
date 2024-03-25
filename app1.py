@@ -165,7 +165,7 @@ def start_detection(st, stframe):
     sequence = []
     sentence = []
     predictions = []
-    threshold = 0.4
+    threshold = 0.5
 
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         while cap.isOpened():
@@ -184,7 +184,7 @@ def start_detection(st, stframe):
                     res = model.predict(np.expand_dims(sequence, axis=0))[0]
                     predictions.append(np.argmax(res))
 
-                    if len(predictions) >= 10:
+                    if len(predictions) >= 18:
                         unique_predictions = np.unique(predictions[-10:])
                         if unique_predictions.size > 0:
                             most_common_prediction = unique_predictions[0]
@@ -196,8 +196,8 @@ def start_detection(st, stframe):
                                     if current_action in audio_files:
                                         playsound(audio_files[current_action])
 
-                                        if len(sentence) > 5:
-                                             sentence = sentence[-5:]
+                                        if len(sentence) > 1:
+                                             sentence = sentence[-1:]    
 
                     # image = prob_viz(res, actions, image, colors)
 
