@@ -1,256 +1,127 @@
 import streamlit as st
+from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
 import cv2
 import numpy as np
 import os
+from matplotlib import pyplot as plt
 import time
+import playsound
 import mediapipe as mp
-import pyttsx3
-from playsound import playsound
-import tensorflow as tf
-import warnings
-from keras.models import load_model
-warnings.filterwarnings('ignore')
+from tensorflow import keras
+import av
+
+mp_holistic = mp.solutions.holistic 
+mp_drawing = mp.solutions.drawing_utils
+
+modelF= keras.models.load_model('new_action_mod.h5')
+st.set_page_config(page_title="Streamlit WebRTC Demo", page_icon="🖐")
 
 
 
-# Load model:
-model = load_model('new_action_mod.h5')
-
-model.load_weights('new_action_mod.h5')
-# MP Holistic:
-mp_holistic = mp.solutions.holistic # Holistic model
-mp_drawing = mp.solutions.drawing_utils # Drawing utilities
-mp_hands = mp.solutions.hands
-hands = mp_hands.Hands()
-mp_draw = mp.solutions.drawing_utils
-
-DATA_PATH = os.path.join('MP_Data_1') 
-
-actions = np.array(['Ahmar', 'Abyad', 'Akhdar'])
-
-# Thirty videos worth of data
-no_sequences = 30
-
-# Videos are going to be 30 frames in length
-sequence_length = 30
-
-# Folder start
-start_folder = 1
-for action in actions:
-    action_path = os.path.join(DATA_PATH, action)
-
-    # Check if the directory exists
-    if os.path.exists(action_path):
-        # Get the list of files in the directory
-        files = os.listdir(action_path)
-
-        # Check if the list is not empty
-        if files:
-            # Convert the file names to integers and find the maximum
-            dirmax = np.max(np.array(files).astype(int))
-        else:
-            dirmax = 0  # Set a default value if the directory is empty
-    else:
-        dirmax = 0  # Set a default value if the directory does not exist
-
-    for sequence in range(1, no_sequences + 1):
-        try:
-            os.makedirs(os.path.join(DATA_PATH, action, str(dirmax + sequence)))
-        except:
-            pass
 
 
+class OpenCamera (VideoProcessorBase):
+    def __init__(self) -> None :
+        self.sequence = []
+        self.sentence = []
+        self.threshold = 0.8
+        self.actions = np.array(['Ahmar', 'Abdyad', 'Akhdar'])
 
-def mediapipe_detection(image, model):
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # COLOR CONVERSION BGR 2 RGB
-    image.flags.writeable = False                  # Image is no longer writeable
-    results = model.process(image)                 # Make prediction
-    image.flags.writeable = True                   # Image is now writeable 
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR) # COLOR COVERSION RGB 2 BGR
-    return image, results
+    
 
-# Function to draw landmarks with styling
-def draw_styled_landmarks(image, results):
-    mp_drawing.draw_landmarks(image, results.face_landmarks, mp_holistic.FACEMESH_CONTOURS, 
+
+    def mediapipe_detection(self,image, model):
+        self.image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        self.image.flags.writeable = False                 
+        self.results = model.process(image)                
+        self.image.flags.writeable = True                   
+        self.image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        return image, self.results
+
+
+    # Function to draw landmarks with styling
+    def draw_styled_landmarks(self,image, results):
+
+    
+            mp_drawing.draw_landmarks(image, results.face_landmarks, mp_holistic.FACEMESH_CONTOURS, 
                              mp_drawing.DrawingSpec(color=(80,110,10), thickness=1, circle_radius=1), 
                              mp_drawing.DrawingSpec(color=(80,256,121), thickness=1, circle_radius=1)) 
-    mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS,
-                             mp_drawing.DrawingSpec(color=(80,22,10), thickness=2, circle_radius=4), 
+            mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS,
+                             mp_drawing.DrawingSpec(color=(80,22,10), thickness=2, circle_radius=2), 
                              mp_drawing.DrawingSpec(color=(80,44,121), thickness=2, circle_radius=2)) 
-    mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS, 
-                             mp_drawing.DrawingSpec(color=(121,22,76), thickness=2, circle_radius=4), 
+            mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS, 
+                             mp_drawing.DrawingSpec(color=(121,22,76), thickness=2, circle_radius=2), 
                              mp_drawing.DrawingSpec(color=(121,44,250), thickness=2, circle_radius=2)) 
-    mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS, 
-                             mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=4), 
+            mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS, 
+                             mp_drawing.DrawingSpec(color=(245,117,66), thickness=2, circle_radius=2), 
                              mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)) 
-# Extract Keypoint values
-def extract_keypoints(results):
-    pose = np.array([[res.x, res.y, res.z, res.visibility] for res in results.pose_landmarks.landmark]).flatten() if results.pose_landmarks else np.zeros(33*4)
-    face = np.array([[res.x, res.y, res.z] for res in results.face_landmarks.landmark]).flatten() if results.face_landmarks else np.zeros(468*3)
-    lh = np.array([[res.x, res.y, res.z] for res in results.left_hand_landmarks.landmark]).flatten() if results.left_hand_landmarks else np.zeros(21*3)
-    rh = np.array([[res.x, res.y, res.z] for res in results.right_hand_landmarks.landmark]).flatten() if results.right_hand_landmarks else np.zeros(21*3)
-    return np.concatenate([pose, face, lh, rh])
 
 
+    def extract_keypoints(self, results):
+        self.key1 = np.array([[res.x, res.y, res.z, res.visibility] for res in results.pose_landmarks.landmark]).flatten() if results.pose_landmarks else np.zeros(33*4)
+        self.key2 = np.array([[res.x, res.y, res.z] for res in results.face_landmarks.landmark]).flatten() if results.face_landmarks else np.zeros(468*3)
+        self.lh = np.array([[res.x, res.y, res.z] for res in results.left_hand_landmarks.landmark]).flatten() if results.left_hand_landmarks else np.zeros(21*3)
+        self.rh = np.array([[res.x, res.y, res.z] for res in results.right_hand_landmarks.landmark]).flatten() if results.right_hand_landmarks else np.zeros(21*3)
+        return np.concatenate([self.key1, self.key2, self.lh, self.rh])
+    
 
-# Visualize prediction:
-def prob_viz(res, actions, input_frame):
-    output_frame = input_frame.copy()
+    # Visualize prediction:
 
-    pred_dict = dict(zip(actions, res))
-    # sorting for prediction and get top 5
-    prediction = sorted(pred_dict.items(), key=lambda x: x[1])[::-1][:5]
+    # Define functions for visualization and detection
 
-    for num, pred in enumerate(prediction):
-        text = '{}: {}'.format(pred[0], round(float(pred[1]),4))
-        # cv2.rectangle(output_frame, (0,60+num*40), (int(prob*100), 90+num*40), colors[num], -1)
-        cv2.putText(output_frame, text, (0, 85+num*40), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (255,255,255), 2, cv2.LINE_AA) 
-    return output_frame
+    
+    def recv(self, frame):
+        self.predictions=[]
+        img=frame.to_ndarray(format="bgr24")
+        with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
+            image, results = self.mediapipe_detection(img,holistic)
+            self.draw_styled_landmarks(image, results)
+            # 2. Prediction logic
+            keypoints = self.extract_keypoints(results)
 
+            self.sequence.append(keypoints)
+            self.sequence = self.sequence[-30:]
+              
+            if len(self.sequence) == 30:
+                    res = modelF.predict(np.expand_dims(self.sequence, axis=0))[0]
+                    self.predictions.append(np.argmax(res))
 
-###############################################################################################
-                                            # STREAMLIT #
-
-col1, col2 = st.columns((3,1))
-with col1:
-    st.title('ICAN - Lebanese Sign Language Interpreter ')
-    st.write('Make by ICAN Team')
-
-with col2:
-    st.image('Logo.png')
-
-# Checkboxes
-st.header('Webcam')
-
-col1, col2, col3 = st.columns(3)
-with col1:
-    show_webcam = st.checkbox('Show webcam')
-
-# Webcam
-FRAME_WINDOW = st.image([])
-cap = cv2.VideoCapture(-1) # device 1/2
-def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
-    # initialize the dimensions of the image to be resized and
-    # grab the image size
-    dim = None
-    (h, w) = image.shape[:2]
-
-    # if both the width and height are None, then return the
-    # original image
-    if width is None and height is None:
-        return image
-
-    # check to see if the width is None
-    if width is None:
-        # calculate the ratio of the height and construct the
-        # dimensions
-        r = height / float(h)
-        dim = (int(w * r), height)
-
-    # otherwise, the height is None
-    else:
-        # calculate the ratio of the width and construct the
-        # dimensions
-        r = width / float(w)
-        dim = (width, int(h * r))
-
-    # resize the image
-    resized = cv2.resize(image, dim, interpolation=inter)
-
-    # return the resized image
-    return resized
-
-def start_detection(st, stframe):
-    cap = cv2.VideoCapture(0)
-    sequence = []
-    sentence = []
-    predictions = []
-    threshold = 0.5
-
-    with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
-        while cap.isOpened():
-            ret, frame = cap.read()
-            image, results = mediapipe_detection(frame, holistic)
-
-            # Check if either left or right hand landmarks are detected
-            if results.left_hand_landmarks or results.right_hand_landmarks:
-                draw_styled_landmarks(image, results)
-
-                keypoints = extract_keypoints(results)
-                sequence.append(keypoints)
-                sequence = sequence[-30:]
-
-                if len(sequence) == 30:
-                    res = model.predict(np.expand_dims(sequence, axis=0))[0]
-                    predictions.append(np.argmax(res))
-
-                    if len(predictions) >= 18:
-                        unique_predictions = np.unique(predictions[-10:])
+                    if len(self.predictions) >= 15:
+                        unique_predictions = np.unique(self.predictions[-15:])
                         if unique_predictions.size > 0:
                             most_common_prediction = unique_predictions[0]
-                            if most_common_prediction == np.argmax(res) and res[np.argmax(res)] > threshold:
-                                current_action = actions[np.argmax(res)]
-                                if len(sentence) == 0 or current_action != sentence[-1]:
-                                    sentence.append(current_action)
+                            if most_common_prediction == np.argmax(res) and res[np.argmax(res)] > self.threshold:
+                                current_action = self.actions[np.argmax(res)]
+                                if len(self.sentence) == 0 or current_action != self.sentence[-1]:
+                                    self.sentence.append(current_action)
                                     audio_files = {'Abyad': 'audio/abyad.mp3', 'Ahmar': 'audio/ahmar.mp3', 'Akhdar': 'audio/akhdar.mp3'}
                                     if current_action in audio_files:
                                         playsound(audio_files[current_action])
+                                     
 
-                                        if len(sentence) > 1:
-                                             sentence = sentence[-1:]    
-
-                    # image = prob_viz(res, actions, image, colors)
-
-                cv2.rectangle(image, (0, 0), (640, 40), (245, 117, 16), -1)
-                cv2.putText(image, ' '.join(sentence), (3, 30), 
-                            cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
-
-            # Display the frame in the Streamlit app
-            frame = cv2.resize(image, (0, 0), fx=0.8, fy=0.8)
-            frame = image_resize(image=frame, width=640)
-            stframe.image(frame, channels='BGR', use_column_width=True)
-
-            # Break gracefully
-            if cv2.waitKey(10) & 0xFF == ord('q'):
-                break
-
-        cap.release()
-        cv2.destroyAllWindows()
-
-
-cap.release()
-cv2.destroyAllWindows()
-
-
-
-st.markdown(' ## Output')
-
-
-stframe = st.empty()
-if show_webcam:
-    vid = cv2.VideoCapture(0)
-    while True:
-        ret, img = vid.read()
-        if ret is None:
-            print("Error: Unable to read frame from webcam")
-            break
-        img = cv2.flip(img, 1)
-        
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        results = hands.process(img)
-
-        img.flags.writeable = True
-        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-
-                    # Call the start_detection function with st and stframe arguments
-        start_detection(st, stframe)
-
-                    # Break the loop if 'q' is pressed or any other termination condition
-        if cv2.waitKey(10) & 0xFF == ord('q'):
-            break
-elif not show_webcam:
-    cv2.destroyAllWindows()
-    st.write('Please check the webcam box to start the interpreter')
-
-#close webcam
+                                        if len(self.sentence) > 1:
+                                             self.sentence = self.sentence[-1:]     
+                   #image = prob_viz(res, self.actions, image, colors)
+            #3. Viz logic
+            colors = [(245,117,16), (117,245,16), (16,117,245)]
+                    # Viz probabilities
     
+            
+            #cv2.rectangle(image, (0,0), (640, 40), (245, 117, 16), -1)
+            cv2.putText(image, ' '.join(self.sentence), (3,30),cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+            
+    #   av.VideoFrame.from_ndarray(image, format="bgr24")      
+        return av.VideoFrame.from_ndarray(image, format="bgr24")
+
+st.title('ICAN - Lebanese Sign Language Interpreter')
+st.write('Made by ICAN Team')
+
+st.header('Real-Time Hand Gesture Recognition Using Mediapipe & LSTM')
+st.markdown('To start detecting your LSL gesture click on the "START" button')
+ctx = webrtc_streamer(
+    key="example",
+    video_processor_factory=OpenCamera,
+    rtc_configuration={ # Add this line
+        "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+    }, media_stream_constraints={"video": True, "audio": False,}, async_processing=True
+)
