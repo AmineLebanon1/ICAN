@@ -4,5 +4,5 @@ mediapipe~=0.10.8
 scikit-learn~=1.4.1.post1
 tensorflow~=2.15.0
 pyttsx3==2.90
-streamlit-webrtc==0.41.0
+streamlit-webrtc==0.47.6
 playsound==1.2.2
