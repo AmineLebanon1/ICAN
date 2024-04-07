@@ -7,13 +7,13 @@ from matplotlib import pyplot as plt
 import time
 import mediapipe as mp
 from tensorflow import keras
+from keras.models import load_model
 import av
 
 mp_holistic = mp.solutions.holistic 
 mp_drawing = mp.solutions.drawing_utils
 
-file_path = os.path.join(os.path.dirname(__file__), 'rec1.h5')
-modelF = load_model(file_path)
+modelF = load_model('rec_1.h5')
 
 
 
