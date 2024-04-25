@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Language Recognition</title>
+    <style>
+      #video-container {
+        margin: 0 auto;
+        width: 640px;
+        height: 480px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sign Language Recognition</h1>
+    <h2>
+      Mimic this Sign: <span id="mimic-word">{{ current_sign_name }}</span>
+    </h2>
+    <h2>Points: <span id="points">{{ points }}</span></h2>
+    <div id="video-container">
+      <img src="{{ url_for('video_feed') }}" width="640" height="480" />
+    </div>
+    <button id="next-button">Next</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  </body>
+</html>
