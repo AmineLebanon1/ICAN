@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8" />
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon2.ico') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/slider.css') }}" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600&display=swap" rel="stylesheet" />
+
+  <title>ICAN</title>
+  <meta name="description"
+    content="A LSTM keypoint dynamic Lebanese Sign Language game by ICAN senior project team. " />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+    integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+    crossorigin="anonymous">
+    </script>
+  <script type="text/javascript" charset="utf-8">
+    var socket = io();
+    socket.on('connect', function () {
+      socket.emit('my event', { data: 'I\'m connected!' });
+    });
+  </script>
+    <style>
+     #video {
+      transform: rotateY(180deg);
+      -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+      -moz-transform:rotateY(180deg); /* Firefox */
+
+     }
+    </style>
+    <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  </head>
+
+  <body>
+    <div class="game-container">
+    <div class="app-bar">
+      <div class="logo-container">
+        <img class="logo" src="../static/images/sign-language-interpretation.png" alt="jungle logo" />
+      </div>
+      <div class="intro-container">
+        <h1 class="title-text">ICAN Learning</h1>
+        <p class="description-text">
+          A LSTM keypoint dynamic Lebanese Sign Language game by ICAN senior project team. 
+        </p>
+      </div>
+    </div>
+    <!-- Rounded switch -->
+    <div class="toggle-container">
+      <div class="prompt-container">
+        <div class="action-container">
+          <p class="animal-label">Sign this animal:</p>
+          <div class="action-wrapper">
+            <p id="currentAction" class="target-animal">{{current_action}}</p>
+            <img class="next-icon" src="../static/images/right-arrow.png" alt="next" onclick="getNextAnimal()">
+          </div>
+        </div>
+        <div class="vertical-divider"></div>
+        <div class=" score-container">
+          <p class="score-label">Score:</p>
+          <div class="action-wrapper">
+            <p id="currentScore" class="target-animal">{{current_score}}</p>
+            <img src="../static/images/reset.png" id="reset_button" alt="reset" class="reset-icon" />
+          </div>
+        </div>
+      </div>
+      <div class="slidecontainer">
+        <p>
+          <a class="ui-tooltip"
+            title="Adjust Minimum Threshold for LSTM model to display animal emoji on webcam screen.">
+            <span style="cursor: help;">LSTM Model Detection Threshold</span></a>
+
+          = <span id="demo"></span>
+        </p>
+        <input type="range" min="0" max="1" value="0.9" step="0.05" class="slider" id="myRange">
+      </div>
+      <div class="switch-container">
+        <a class="ui-tooltip" title="Toggle Keypoint display on webcam screen.">
+          <p class="switch-label" style="cursor: help;">Display Keypoints</p>
+        </a>
+        <label class="switch">
+          <input type="checkbox" id="switch1" onclick="switched(this)" checked>
+          <span class="slider_switch round"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Score Reset Button -->
+    <script type=text/javascript>
+
+      $(function() {
+        $('#reset_button').on('click', function(e) {
+          e.preventDefault()
+          $.getJSON('/reset_score',
+              function(data) {
+            //do nothing
+          });
+          getCurrentScore();
+          return false;
+        });
+      });
+      </script>
+
+    <!--<div class="slidecontainer">
+        <p>Mediapipe Keypoint Detection Confidence = <span id="demo1"></span>
+        <input type="range" min="0" max="1" value="0.5" step="0.05" class="slider1" id="myRange1">
+      </p>
+      </div>-->
+
+    <!-- Functions for jQuery AJAX -->
+    <script>
+      // Current Animal
+      var action = document.getElementById("currentAction");
+      var score = document.getElementById("currentScore");
+
+
+      function getCurrentAnimal() {
+        $.ajax({
+          type: "GET",
+          url: "/get_current_action",
+          dataType: 'json',
+          success: function (result) {
+            $('#currentAction').html(result);
+          }
+        })
+      }
+      function getNextAnimal() {
+        $.ajax({
+          type: "GET",
+          url: "/get_next_action",
+          dataType: 'json',
+          success: function (result) {
+            $('#currentAction').html(result);
+          }
+        })
+      }
+
+      function getCurrentScore() {
+        $.ajax({
+          type: "GET",
+          url: "/get_current_score",
+          dataType: 'json',
+          success: function (result) {
+            $('#currentScore').html(result);
+          }
+        })
+      }
+
+
+      $(document).ready(function () {
+        var socket = io.connect('http://' + document.domain + ':' + location.port)
+        socket.on('new action', function () {
+          getCurrentAnimal()
+          getCurrentScore()
+        })
+      })
+
+      // Call next animal
+      function nextAnimal() {
+        getNextAnimal()
+      }
+
+      //Toggle Keypoints Switch
+      var switchValues = {};
+      function switched(switchElement) {
+        switchValues[switchElement.id] = switchElement.checked;
+        //console.log(switchValues[switchElement.id]);
+        var toggle_value = [{ "toggle": switchValues[switchElement.id] }];
+        $.ajax({
+          type: "POST",
+          url: "/process_toggle_value",
+          data: JSON.stringify(toggle_value),
+          contentType: "application/json",
+          dataType: 'json',
+          success: function (result) {
+            //console.log("Result:");
+            //console.log(result);
+          }
+        })
+      }
+
+      //LSTM Model slider AJAX
+      var slider = document.getElementById("myRange");
+      var output = document.getElementById("demo");
+      output.innerHTML = slider.value;
+
+      slider.oninput = function () {
+        output.innerHTML = this.value;
+        var slider_value = [{ "slider": this.value }];
+        $.ajax({
+          type: "POST",
+          url: "/process_slider_value",
+          data: JSON.stringify(slider_value),
+          contentType: "application/json",
+          dataType: 'json',
+          success: function (result) {
+            //console.log("Result:");
+            //console.log(result);
+          }
+        });
+      }
+
+      //Mediapipe Keypoint Detection Confidence Slider AJAX
+      /*var slider1 = document.getElementById("myRange1");
+      var output1 = document.getElementById("demo1");
+      output1.innerHTML = slider1.value;
+  
+      slider1.oninput = function() {
+        output1.innerHTML = this.value;
+        var mediapipe_slider_value1 = [{"slider":this.value}];
+        $.ajax({
+            type: "POST",
+            url: "/process_mediapipe_slider_value1",
+            data: JSON.stringify(mediapipe_slider_value1),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function(result) {
+            console.log("Result:");
+            console.log(result);
+            }
+          });
+      }*/
+    </script>
+<div style="display: flex; justify-content: center;">
+  <div id="container" style="flex: 1;">
+    <h2>Webcam Live Feed</h2>
+    <video autoplay playsinline id="videoElement" width="400" height="300"></video>
+    <canvas id="canvas" width="400" height="300"></canvas>
+  </div>
+
+  <div class='video' style="flex: 1;">
+    <h2>Sign Language Prediction</h2>
+    <img id="photo" width="400" height="300">
+  </div>
+</div>
+
+
+    </div>
+      <div class="learning-container">
+    <div class="app- <video class="video-feed" autoplay="true" id="webcam" alt='Webcam display'></video>bar" style="margin-top:40px">
+      <div class="intro-container">
+        <h1 class="title-text">Learn ASL Animal Dynamic Sign Language</h1>
+        <p class="description-text">
+          Hover over the animal logos to see how to perform an ASL Animal Sign
+        </p>
+      </div>
+    </div>
+    <div class="image-wrapper">
+      <div class="emoji-container">
+        <div class="imageBox">
+          <img src="../static/images/bird.png" alt="Bird" style="width:80px; margin: 20px">
+          <div class="hoverImg">
+            <img src="../static/gif/bird.gif" alt="Bird gif" style="width:100%; border-radius: 25px;">
+          </div>
+        </div>
+        <div class="imageBox">
+          <img src="../static/images/rabbit.png" alt="Rabbit" style="width:80px; margin: 20px">
+          <div class="hoverImg">
+            <img src="../static/gif/rabbit.gif" alt="Rabbit gif" style="width:100%; border-radius: 25px;">
+          </div>
+        </div>
+        <div class="imageBox">
+          <img src="../static/images/cat.png" alt="Cat gif" style="width:80px; margin: 20px">
+          <div class="hoverImg">
+            <img src="../static/gif/cat.gif" alt="Cat gif" style="width:100%; border-radius: 25px;">
+          </div>
+        </div>
+        <div class="imageBox">
+          <img src="../static/images/fish.png" alt="Fish" style="width:80px; margin: 20px">
+          <div class="hoverImg">
+            <img src="../static/gif/fish.gif" alt="Fish gif" style="width:100%; border-radius: 25px;">
+          </div>
+        </div>
+        <div class="imageBox">
+          <img src="../static/images/snake.png" alt="Snake" style="width:80px; margin: 20px">
+          <div class="hoverImg">
+            <img src="../static/gif/snake.gif" alt="Snake gif" style="width:100%; border-radius: 25px;">
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static',filename='script.js') }}"></script>
+  </body>
+
+</html>
