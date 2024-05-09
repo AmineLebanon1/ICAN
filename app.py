@@ -5,8 +5,6 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 import time
-import eventlet
-eventlet.monkey_patch(socket=True)
 import mediapipe as mp
 from tensorflow import keras
 from playsound import playsound
