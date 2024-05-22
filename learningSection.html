@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>ICAN</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/ICAN_logo_colored.png" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        #image-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(25%, 1fr)); /* Responsive grid with minimum width of 200px */
+            gap: 150px; /* Add space between images */
+        }
+
+        #image-container a img{
+            width: 100%;
+        }
+
+        img {
+            width: 100%;
+            height: 300px; /* Set a specific height for all images */
+            object-fit: cover;
+        }
+
+        /* Media query for smaller screens */
+        @media screen and (max-width: 600px) {
+            #image-container {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust number of columns for smaller screens */
+                gap: 30px; /* Adjust gap for smaller screens */
+            }
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .button {
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 px-4 px-lg-5" style="
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+">
+        <a href="index.html" class="navbar-brand d-flex align-items-center">
+            <img class="img-fluid me-2" src="img/ICAN_Logo.png" alt="" style="width: 50%; height: auto;">
+        </a>
+
+        <div>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-4 py-lg-0">
+                <a href="index.html" class="nav-item nav-link active">Home</a>
+                <a href="search.html" class="nav-item nav-link">Search</a>
+                <a href="app.html" class="nav-item nav-link">App</a>
+                <a href="learning.html" class="nav-item nav-link">Learning</a>
+            </div>
+        </div>
+        </div>
+                <!--a href="about.html" class="nav-item nav-link">About</!--a>
+                    <a href="service.html" class="nav-item nav-link">Service</a>
+                                <a href="roadmap.html" class="nav-item nav-link">Roadmap</a>
+                                <div class="nav-item dropdown">
+                                    - <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                                      <div class="dropdown-menu shadow-sm m-0">
+                                          <a href="feature.html" class="dropdown-item">Feature</a>
+                                          <a href="token.html" class="dropdown-item">Token Sale</a>
+                                          <a href="faq.html" class="dropdown-item">FAQs</a>
+                                          <a href="404.html" class="dropdown-item">404 Page</a>
+                                          <a href="search.html" class="dropdown-item">search</a>
+
+                    </div>
+                </div>
+                <a href="contact.html" class="nav-item nav-link">Contact</a>-->
+            </div>
+            <div class="h-100 d-lg-inline-flex align-items-center d-none">
+                <a class="btn btn-square rounded-circle bg-light text-primary me-0" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-square rounded-circle bg-light text-primary me-0" href=""><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-square rounded-circle bg-light text-primary me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Start -->
+    <div class="container-fluid hero-header bg-light py-5 mb-5">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 mb-3 animated slideInDown">Why you should learn sign language?</h1>
+                    <nav aria-label="breadcrumb animated slideInDown">
+                        <p> By learning sign language, you contribute to creating a more inclusive society where everyone's communication needs are met.</p>
+                    </nav>
+                </div>
+                <div class="col-lg-6 animated fadeIn">
+                    <img id="general" class="img-fluid animated pulse infinite" style="animation-duration: 3s;" src="" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+            <div id="image-container"></div>
+
+                <style>
+                    a {
+                  text-decoration: none;
+                  display: inline-block;
+                  padding: 8px 16px;
+                }
+
+                a:hover {
+                  background-color: #ddd;
+                  color: black;
+                }
+
+                .previous {
+                  background-color: #24808398;
+                  color: black;
+                }
+
+                .next {
+                  background-color: #04AA6D;
+                  color: white;
+                }
+
+                .round {
+                  border-radius: 70%;
+                }
+                </style>
+
+                <!-- Footer Start -->
+                <div class="container-fluid bg-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="container py-5">
+                        <div class="row g-5">
+                            <div class="col-md-6">
+                                <h1 class="text-primary mb-4"><img class="img-fluid me-2" src="img/ICAN_Logo.png" alt="" style="width: 50%;; height: auto;"></h1>
+                                <span>Sign language translator designed to bridge communication gaps between deaf or hard of hearing individuals and those who do not use sign language. Our mission is to promote inclusivity and accessibility through innovative technology.</span>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <h5 class="mb-4">Get In Touch</h5>
+                                <p><i class="fa fa-map-marker-alt me-3"></i>AUST</p>
+                                <p><i class="fa fa-phone-alt me-3"></i>01 218 717</p>
+                                <p><i class="fa fa-envelope me-3"></i>Ican.gmail.com</p>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <h5 class="mb-4">Quick Links</h5>
+                                <a class="btn btn-link" href="index.html">Home</a>
+                                <a class="btn btn-link" href="search.html">Search</a>
+                                <a class="btn btn-link" href="app.html">App</a>
+                                <a class="btn btn-link" href="learning.html">Learning</a>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <h5 class="mb-4">Follow Us</h5>
+                                <div class="d-flex">
+                                    <a class="btn btn-square rounded-circle bg-light text-primary me-0" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-square rounded-circle bg-light text-primary me-0" href=""><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-square rounded-circle bg-light text-primary me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid copyright">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                                    &copy; <a href="index.html">ICAN</a>, All Right Reserved.
+                                </div>
+                                <div class="col-md-6 text-center text-md-end">
+                                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/
+    Designed By <a href="https://htmlcodex.com">HTML Codex</a>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer End -->
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        var category = urlParams.get('category');
+
+        var generalImagePath = `img/${category}.png`;
+
+        var generalImageElement = document.getElementById('general');
+        generalImageElement.src = generalImagePath;
+        generalImageElement.alt = `${category} general image`;
+    </script>
+
+   <script>
+    var imageContainer = document.getElementById('image-container');
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var category = urlParams.get('category');
+
+    if (category) {
+        fetch('json.json')
+            .then(response => response.json())
+            .then(data => {
+                if (!data.images || data.images.length === 0) {
+                    throw new Error('No images found in the JSON file.');
+                }
+
+                var categoryImages = data.images.find(item => item.category === category);
+                if (!categoryImages || !categoryImages.paths || categoryImages.paths.length === 0) {
+                    throw new Error('No images found for category: ' + category);
+                }
+
+                categoryImages.paths.forEach(path => {
+                    var imgElement = document.createElement('img');
+                    var imageName = path.split('/').pop().split('.')[0]; // Extract the image name without extension
+                    imgElement.src = path;
+                    var anchorElement = document.createElement('a');
+                    anchorElement.href = 'selectedSign.html?path=' + imageName; // Redirect to selectedSign.html with image name as path attribute
+                    anchorElement.appendChild(imgElement);
+                    imageContainer.appendChild(anchorElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading images:', error);
+            });
+    } else {
+        console.error('Category not specified in URL parameters.');
+    }
+</script>
+
+
+
+
+    <!--
+
+    <script>
+        var imageContainer = document.getElementById('image-container');
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var attributeValue = urlParams.get('category');
+
+        if (attributeValue) {
+            var folderPath = 'img/' + attributeValue + '/';
+
+            fetch(folderPath)
+                .then(response => response.text())
+                .then(data => {
+                    var parser = new DOMParser();
+                    var htmlDoc = parser.parseFromString(data, 'text/html');
+                    var links = Array.from(htmlDoc.links).map(link => link.href);
+                    var imageLinks = links.filter(link => link.endsWith('.png'));
+                    imageLinks.forEach(link => {
+                        var imgElement = document.createElement('img');
+                        var imageName = link.split('/').pop().split('.')[0]; // Extract the image name without extension
+                        imgElement.src = link;
+                        var anchorElement = document.createElement('a');
+                        anchorElement.href = 'selectedSign.html?path=' + imageName; // Redirect to selectedSign.html with image name as path attribute
+                        anchorElement.appendChild(imgElement);
+                        imageContainer.appendChild(anchorElement);
+                    });
+                });
+        }
+    </script>
+    cript>   document.addEventListener("DOMContentLoaded", function() {
+        var imageContainer = document.getElementById('image-container');
+    var hiddenInput = document.querySelector('input[name="category"]');
+            var folderPath = 'img/' + hiddenInput + '/';
+            console.log(folderPath);
+
+            // Fetch images from the specified folder path
+            fetch(folderPath)
+                .then(response => response.text())
+                .then(data => {
+                    var parser = new DOMParser();
+                    var htmlDoc = parser.parseFromString(data, 'text/html');
+                    var links = Array.from(htmlDoc.links).map(link => link.href);
+                    var imageLinks = links.filter(link => link.endsWith('.png'));
+                    // Sort imageLinks array based on filenames
+                    imageLinks.sort((a, b) => {
+                        return parseInt(a.substring(a.lastIndexOf('/') + 1, a.lastIndexOf('.'))) -
+                               parseInt(b.substring(b.lastIndexOf('/') + 1, b.lastIndexOf('.')));
+                    });
+                    imageLinks.forEach(link => {
+                        var imgElement = document.createElement('img');
+                        imgElement.src = link;
+                        imageContainer.appendChild(imgElement);
+                    });
+                });
+                })
+        </script-->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top" style="margin-left: 80%;"><i class="bi bi-arrow-up"></i></a>
+
+
+                <!-- JavaScript Libraries -->
+                <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="lib/wow/wow.min.js"></script>
+                <script src="lib/easing/easing.min.js"></script>
+                <script src="lib/waypoints/waypoints.min.js"></script>
+                <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+                <script src="lib/counterup/counterup.min.js"></script>
+
+                <!-- Template Javascript -->
+                <script src="js/main.js"></script>
+</body>
+</html>

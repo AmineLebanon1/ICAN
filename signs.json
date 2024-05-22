@@ -1,0 +1,116 @@
+{
+  "signs": [
+    {
+      "imageName": "sign1.png",
+      "description": "alef-أ"
+    },
+    {
+      "imageName": "sign2.png",
+      "description": "Baa - ب"
+    },
+    {
+      "imageName": "sign3.png",
+      "description": "Ta - ت"
+    },
+    {
+      "imageName": "sign4.png",
+      "description": "Thaa - ث"
+    },
+    {
+      "imageName": "sign5.png",
+      "description": "Jeem - ج"
+    },
+    {
+      "imageName": "sign6.png",
+      "description": "Haa - ح"
+    },
+    {
+      "imageName": "sign7.png",
+      "description": "Khaa - خ"
+    },
+    {
+      "imageName": "sign8.png",
+      "description": "Dal - د"
+    },
+    {
+      "imageName": "sign9.png",
+      "description": "thal - ذ"
+    },
+    {
+      "imageName": "sign10.png",
+      "description": "Ra - ر"
+    },
+    {
+      "imageName": "sign11.png",
+      "description": "Zay - ز"
+    },
+    {
+      "imageName": "sign12.png",
+      "description": "Seen - س"
+    },
+    {
+      "imageName": "sign13.png",
+      "description": "Sheen - ش"
+    },
+    {
+      "imageName": "sign14.png",
+      "description": "Saad - ص"
+    },
+    {
+      "imageName": "sign15.png",
+      "description": "Dhad - ض"
+    },
+    {
+      "imageName": "sign16.png",
+      "description": "Taa - ط"
+    },
+    {
+      "imageName": "sign17.png",
+      "description": "Dha - ظ"
+    },
+    {
+      "imageName": "sign18.png",
+      "description": "Ain - ع"
+    },
+    {
+      "imageName": "sign19.png",
+      "description": "Ghain - غ"
+    },
+    {
+      "imageName": "sign20.png",
+      "description": "Fa - ف"
+    },
+    {
+      "imageName": "sign21.png",
+      "description": "Gaf - ق"
+    },
+    {
+      "imageName": "sign22.png",
+      "description": "Kaf - ك"
+    },
+    {
+      "imageName": "sign23.png",
+      "description": "Lam - ل"
+    },
+    {
+      "imageName": "sign24.png",
+      "description": "Meem - م"
+    },
+    {
+      "imageName": "sign25.png",
+      "description": "Nun - ن"
+    },
+    {
+      "imageName": "sign26.png",
+      "description": "Waw - و"
+    },
+    {
+      "imageName": "sign27.png",
+      "description": "Ha - هـ"
+    },
+    {
+      "imageName": "sign28.png",
+      "description": "Ya - ي"
+    }
+  ]
+}

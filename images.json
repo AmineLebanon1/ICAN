@@ -1,0 +1,116 @@
+{
+  "signs": [
+    {
+      "imageName": "sign1.png",
+      "description": "Description for أ"
+    },
+    {
+      "imageName": "sign2.png",
+      "description": "Description for ب"
+    },
+    {
+      "imageName": "sign3.png",
+      "description": "Description for ت"
+    },
+    {
+      "imageName": "sign4.png",
+      "description": "Description for ث"
+    },
+    {
+      "imageName": "sign5.png",
+      "description": "Description for ح"
+    },
+    {
+      "imageName": "sign6.png",
+      "description": "Description for ح"
+    },
+    {
+      "imageName": "sign7.png",
+      "description": "Description for خ"
+    },
+    {
+      "imageName": "sign8.png",
+      "description": "Description for د"
+    },
+    {
+      "imageName": "sign9.png",
+      "description": "Description for ذ"
+    },
+    {
+      "imageName": "sign10.png",
+      "description": "Description for ر"
+    },
+    {
+      "imageName": "sign11.png",
+      "description": "Description for ز"
+    },
+    {
+      "imageName": "sign12.png",
+      "description": "Description for س"
+    },
+    {
+      "imageName": "sign13.png",
+      "description": "Description for ش"
+    },
+    {
+      "imageName": "sign14.png",
+      "description": "Description for ص"
+    },
+    {
+      "imageName": "sign15.png",
+      "description": "Description for ض"
+    },
+    {
+      "imageName": "sign16.png",
+      "description": "Description for ط"
+    },
+    {
+      "imageName": "sign17.png",
+      "description": "Description for ظ"
+    },
+    {
+      "imageName": "sign18.png",
+      "description": "Description for ع"
+    },
+    {
+      "imageName": "sign19.png",
+      "description": "Description for غ"
+    },
+    {
+      "imageName": "sign20.png",
+      "description": "Description for ف"
+    },
+    {
+      "imageName": "sign21.png",
+      "description": "Description for ق"
+    },
+    {
+      "imageName": "sign22.png",
+      "description": "Description for ك"
+    },
+    {
+      "imageName": "sign23.png",
+      "description": "Description for ل"
+    },
+    {
+      "imageName": "sign24.png",
+      "description": "Description for م"
+    },
+    {
+      "imageName": "sign25.png",
+      "description": "Description for ن"
+    },
+    {
+      "imageName": "sign26.png",
+      "description": "Description for و"
+    },
+    {
+      "imageName": "sign27.png",
+      "description": "Description for هـ"
+    },
+    {
+      "imageName": "sign28.png",
+      "description": "Description for ي"
+    }
+  ]
+}

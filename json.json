@@ -1,0 +1,119 @@
+{
+  "images": [
+    {
+      "category": "arabic",
+      "paths": [
+        "img/1.png",
+        "img/2.png",
+        "img/3.png",
+        "img/4.png",
+        "img/5.png",
+        "img/6.png",
+        "img/7.png",
+        "img/8.png",
+        "img/9.png",
+        "img/10.png",
+        "img/11.png",
+        "img/12.png",
+        "img/13.png",
+        "img/14.png",
+        "img/15.png",
+        "img/16.png",
+        "img/17.png",
+        "img/18.png",
+        "img/19.png",
+        "img/20.png",
+        "img/21.png",
+        "img/22.png",
+        "img/23.png",
+        "img/24.png",
+        "img/25.png",
+        "img/26.png",
+        "img/27.png",
+        "img/28.png"
+      ],
+      "general": "img/general_arabic.png"
+    },
+    {
+      "category": "weather",
+      "paths": [
+        "img/cloud.png",
+        "img/cold.png",
+        "img/hot.png",
+        "img/rain.png",
+        "img/snow.png",
+        "img/sun.png",
+        "img/thunderstorm.png",
+        "img/weatherr.png"
+      ],
+      "general": "img/general_weather.png"
+    },
+    {
+      "category": "animals",
+      "paths": [
+        "img/bee.png",
+        "img/bird.png",
+        "img/cat.png",
+        "img/chicken.png",
+        "img/cow.png",
+        "img/dog.png",
+        "img/fish.png",
+        "img/goat.png",
+        "img/horse.png",
+        "img/pig.png",
+        "img/rabbit.png",
+        "img/snake.png"
+      ],
+      "general": "img/general_animals.png"
+    },
+    {
+      "category": "colors",
+      "paths": [
+        "img/blue.png",
+        "img/orange.png",
+        "img/green.png",
+        "img/white.png"
+      ],
+      "general": "img/general_colors.png"
+    },
+    {
+      "category": "countries",
+      "paths": [
+        "img/lebanon.png",
+        "img/jordan.png",
+        "img/palestine.png",
+        "img/europe.png",
+        "img/france.png",
+        "img/spain.png",
+        "img/america.png",
+        "img/canada.png",
+        "img/brazil.png",
+        "img/yemen.png",
+        "img/china.png"
+      ],
+      "general": "img/general_colors.png"
+    }
+    ,
+    {
+      "category": "greeting",
+      "paths": [
+        "img/hello.png",
+        "img/you.png",
+        "img/me.png",
+        "img/come.png",
+        "img/sorry.png",
+        "img/thankyou.png",
+        "img/please.png",
+        "img/how.png",
+        "img/iloveyou.png",
+        "img/good.png",
+        "img/hungry.png",
+        "img/sleepy.png",
+        "img/work.png",
+        "img/water.png",
+        "img/coffee.png"
+      ],
+      "general": "img/general_colors.png"
+    }
+  ]
+}
